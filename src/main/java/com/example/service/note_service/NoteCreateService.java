@@ -5,7 +5,6 @@ import com.example.repository.NoteRepository;
 import com.example.service.note_service.request.NoteCreateRequest;
 import com.example.service.note_service.response.NoteCreateResponse;
 import com.example.service.note_service.validation.NoteValidationService;
-import com.example.service.user_service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

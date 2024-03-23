@@ -12,7 +12,7 @@ public class NoteUpdateResponse {
     private StatusCode statusCode;
     private String message;
 
-    public static NoteUpdateResponse success(Long id){
+    public static NoteUpdateResponse success(Long id) {
         return NoteUpdateResponse.builder()
                 .id(id)
                 .success(true)
@@ -20,7 +20,8 @@ public class NoteUpdateResponse {
                 .message("Note successfully updated!")
                 .build();
     }
-    public static NoteUpdateResponse failed(String message){
+
+    public static NoteUpdateResponse failed(String message) {
         return NoteUpdateResponse.builder()
                 .id(-1L)
                 .success(false)

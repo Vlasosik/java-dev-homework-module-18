@@ -11,7 +11,8 @@ public class NoteDeleteResponse {
     private boolean success;
     private StatusCode statusCode;
     private String message;
-    public static NoteDeleteResponse success(Long id){
+
+    public static NoteDeleteResponse success(Long id) {
         return NoteDeleteResponse.builder()
                 .id(id)
                 .success(true)
@@ -19,7 +20,8 @@ public class NoteDeleteResponse {
                 .message("Note successfully delete!")
                 .build();
     }
-    public static NoteDeleteResponse failed(String message){
+
+    public static NoteDeleteResponse failed(String message) {
         return NoteDeleteResponse.builder()
                 .id(-1L)
                 .success(false)
