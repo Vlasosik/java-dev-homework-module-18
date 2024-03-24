@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     login varchar(100) unique not null,
     password varchar(64) not null
 );
-CREATE TABLE IF NOT EXISTS note (
+CREATE TABLE IF NOT EXISTS notes (
     id bigint auto_increment primary key,
     user_id bigint,
     title varchar(100) not null,
