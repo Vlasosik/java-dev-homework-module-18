@@ -45,12 +45,6 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    /*
-    Проблема, з якою ви стикаєтеся, пов'язана з тим, що розмір ключа,
-    який ви використовуєте для підпису JWT, недостатньо безпечний для алгоритму HS512 (512 біт).
-    У вас зараз ключ має розмір 48 бітів, що не відповідає вимогам специфікації JWT.
-    більш детальніше про це почитати
-     */
     private Key getSigningKey() {
         return new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
