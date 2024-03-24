@@ -12,15 +12,19 @@ import com.example.service.note_service.response.NoteCreateResponse;
 import com.example.service.note_service.response.NoteDeleteResponse;
 import com.example.service.note_service.response.NoteReadResponse;
 import com.example.service.note_service.response.NoteUpdateResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/note")
+@RequestMapping("/api/v1/notes")
 @AllArgsConstructor
+@Validated
 public class NoteRestController {
     private final NoteCreateService createNoteService;
     private final NoteReadService readNoteService;
@@ -28,29 +32,29 @@ public class NoteRestController {
     private final NoteDeleteService noteDeleteService;
     private final NoteRepository noteRepository;
 
-    @GetMapping("/list")
+    @GetMapping("/lists")
     public List<NoteEntity> noteList() {
         return noteRepository.findAll();
     }
 
 
-    @PostMapping("/create")
-    public NoteCreateResponse createNote(@RequestBody NoteCreateRequest noteRequest) {
-        return createNoteService.noteCreate(noteRequest);
+    @PostMapping("/creates")
+    public NoteCreateResponse createNote(Principal principal, @RequestBody NoteCreateRequest noteRequest) {
+        return createNoteService.noteCreate(principal, noteRequest);
     }
 
-    @GetMapping("/read")
-    public NoteReadResponse readNote(@RequestParam Long id) {
-        return readNoteService.noteRead(id);
+    @GetMapping("/reads")
+    public NoteReadResponse readNote(Principal principal, @RequestParam @NotNull Long id) {
+        return readNoteService.noteRead(principal, id);
     }
 
-    @PutMapping("/update")
-    public NoteUpdateResponse updateNote(@RequestParam("id") Long id, @RequestBody NoteUpdateRequest noteUpdateRequest) {
-        return noteUpdateService.updateNote(id, noteUpdateRequest);
+    @PutMapping("/updates")
+    public NoteUpdateResponse updateNote(Principal principal, @RequestParam("id") @NotNull Long id, @RequestBody NoteUpdateRequest noteUpdateRequest) {
+        return noteUpdateService.updateNote(principal, id, noteUpdateRequest);
     }
 
-    @DeleteMapping("/delete")
-    public NoteDeleteResponse noteDelete(@RequestParam Long id) {
-        return noteDeleteService.noteDelete(id);
+    @DeleteMapping("/deletes")
+    public NoteDeleteResponse noteDelete(Principal principal, @RequestParam @NotNull Long id) {
+        return noteDeleteService.noteDelete(principal, id);
     }
 }
