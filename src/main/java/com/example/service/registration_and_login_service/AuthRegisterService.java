@@ -42,7 +42,5 @@ public class AuthRegisterService {
         user.setLogin(request.getLogin());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
-//        String token = jwtUtil.generateToken(request.getLogin());
-        // Ви можете зробити що завгодно з токеном, наприклад, повернути його у відповіді або зберегти для майбутнього використання
     }
 }
