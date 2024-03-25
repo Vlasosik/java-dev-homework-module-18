@@ -40,6 +40,7 @@ public class NoteCreateService {
         NoteEntity note = new NoteEntity();
         note.setContext(noteRequest.getContext());
         note.setTitle(noteRequest.getTitle());
+        user.getNotes().add(note);
         note.setUserEntity(user);
         return noteRepository.save(note);
     }
