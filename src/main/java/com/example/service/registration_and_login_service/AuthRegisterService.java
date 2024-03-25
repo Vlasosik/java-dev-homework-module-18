@@ -1,6 +1,9 @@
 package com.example.service.registration_and_login_service;
 
+import com.example.entity.RoleEntity;
 import com.example.entity.UserEntity;
+import com.example.entity.enum_role.RoleName;
+import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
 import com.example.service.registration_and_login_service.request.RegistrationRequest;
 import com.example.service.registration_and_login_service.response.RegistrationResponse;
@@ -41,6 +44,9 @@ public class AuthRegisterService {
         UserEntity user = new UserEntity();
         user.setLogin(request.getLogin());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        RoleEntity role = new RoleEntity();
+        role.setRoleName(RoleName.ROLE_USER);
+        user.setRoleName(role);
         userRepository.save(user);
     }
 }
