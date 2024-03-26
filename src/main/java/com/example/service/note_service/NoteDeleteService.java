@@ -1,5 +1,6 @@
 package com.example.service.note_service;
 
+import com.example.entity.NoteEntity;
 import com.example.repository.NoteRepository;
 import com.example.service.note_service.response.NoteDeleteResponse;
 import lombok.AllArgsConstructor;
@@ -14,20 +15,18 @@ public class NoteDeleteService {
 
     public NoteDeleteResponse noteDelete(Principal principal, Long id) {
         if (principal == null) {
-            NoteDeleteResponse.failed("User not authenticated!");
+            return NoteDeleteResponse.failed("User not authenticated!");
         }
         if (!noteRepository.existsById(id)) {
             return NoteDeleteResponse.failed("Note by {id: " + id + " } does not exist!");
         }
-        return checkForUserDelete(id);
-    }
-
-    private NoteDeleteResponse checkForUserDelete(Long id) {
-        try {
-            noteRepository.deleteById(id);
-            return NoteDeleteResponse.success(id);
-        } catch (Exception ex) {
-            return NoteDeleteResponse.failed("Failed to delete note by {id: " + id + " }");
+        String username = principal.getName();
+        NoteEntity note = noteRepository.findById(id).orElse(null);
+        assert note != null;
+        if (!note.getUserEntity().getLogin().equals(username)) {
+            return NoteDeleteResponse.failed("Unauthorized access to the note!");
         }
+        noteRepository.deleteById(id);
+        return NoteDeleteResponse.success(id);
     }
 }
