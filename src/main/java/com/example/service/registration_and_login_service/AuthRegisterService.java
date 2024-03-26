@@ -23,6 +23,7 @@ public class AuthRegisterService {
     private final ValidationAuthService validationAuthService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
 
     public RegistrationResponse registerUser(RegistrationRequest request) {
@@ -46,6 +47,7 @@ public class AuthRegisterService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         RoleEntity role = new RoleEntity();
         role.setRoleName(RoleName.ROLE_USER);
+        roleRepository.save(role);
         user.setRoleName(role);
         userRepository.save(user);
     }
