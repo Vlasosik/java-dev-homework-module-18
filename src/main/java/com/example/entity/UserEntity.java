@@ -15,7 +15,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @Enumerated(EnumType.STRING)
     @JsonIgnore
@@ -23,7 +23,6 @@ public class UserEntity {
     @Column(unique = true)
     private String login;
     private String password;
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     private List<NoteEntity> notes = new ArrayList<>();
 }
-

@@ -13,7 +13,7 @@ public class NoteEntity {
     private Long id;
     private String title;
     private String context;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserEntity userEntity;
