@@ -1,7 +1,5 @@
 package com.example.controller.note_controller;
 
-import com.example.entity.NoteEntity;
-import com.example.repository.NoteRepository;
 import com.example.service.note_service.NoteCreateService;
 import com.example.service.note_service.NoteDeleteService;
 import com.example.service.note_service.NoteReadService;
@@ -18,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 
 @RestController
@@ -30,13 +27,6 @@ public class NoteRestController {
     private final NoteReadService readNoteService;
     private final NoteUpdateService noteUpdateService;
     private final NoteDeleteService noteDeleteService;
-    private final NoteRepository noteRepository;
-
-    @GetMapping("/lists")
-    public List<NoteEntity> noteList() {
-        return noteRepository.findAll();
-    }
-
 
     @PostMapping("/creates")
     public NoteCreateResponse createNote(Principal principal, @RequestBody NoteCreateRequest noteRequest) {
