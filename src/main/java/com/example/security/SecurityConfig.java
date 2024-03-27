@@ -1,5 +1,6 @@
 package com.example.security;
 
+import com.example.entity.enum_role.RoleName;
 import com.example.security.jwt.JwtRequestFilter;
 import com.example.security.jwt.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -29,19 +30,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/admin/notes/lists").permitAll()
                         .requestMatchers("/api/v1/notes/authentications/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/api/v1/admin/notes/lists").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/h2-console/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/v1/notes/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtRequestFilter(authenticationManager(), userDetailsService, jwtUtil),
                         UsernamePasswordAuthenticationFilter.class)
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .build();
     }
 
